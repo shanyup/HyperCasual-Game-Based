@@ -9,14 +9,13 @@ public class Ch_Movement : MonoBehaviour
 {
     public Rigidbody rb;
     public Animator anim;
-    public float movementSpeed;
-    public float jumpSpeed;
     public Transform groundCheckPos;
     public LayerMask groundLayer;
 
     public Transform[] Layers;
     private int layerInt;
     private GameManager _GameManager;
+    private Ch_Stats _ChStats;
 
     public bool onMid, onRight, onLeft;
     void Start()
@@ -25,6 +24,7 @@ public class Ch_Movement : MonoBehaviour
         onRight = false;
         onLeft = false;
         _GameManager = FindObjectOfType<GameManager>();
+        _ChStats = FindObjectOfType<Ch_Stats>();
     }
 
     private void Update()
@@ -32,7 +32,13 @@ public class Ch_Movement : MonoBehaviour
         if (_GameManager.isGameStart)
         {
             ChangeLine();
+            if (SwipeManager.swipeUp)
+            {
+                Jump();
+            }
         }
+
+        
     }
 
     void FixedUpdate()
@@ -45,12 +51,12 @@ public class Ch_Movement : MonoBehaviour
 
     private void Run()
     {
-        rb.velocity = new Vector3(rb.velocity.x,rb.velocity.y,movementSpeed);
+        rb.velocity = new Vector3(rb.velocity.x,rb.velocity.y,_ChStats.movementSpeed);
     }
 
     private void Jump()
     {
-        rb.AddForce(new Vector3(0,jumpSpeed * 350,0));
+        rb.AddForce(new Vector3(0,_ChStats.jumpSpeed * 350,0));
     }
 
     private void ChangeLine()

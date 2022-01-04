@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject TapToStartPanel;
     public Animator anim;
     public bool isGameStart;
+    public bool isGameOver;
     private void Update()
     {
         if (Input.touchCount > 0)
